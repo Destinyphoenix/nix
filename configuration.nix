@@ -94,6 +94,7 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+	programs.fish.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -102,6 +103,9 @@
   environment.systemPackages = with pkgs; [
     vim 
     git
+	kitty
+	zed-editor
+	brave
   #  wget
   ];
 
