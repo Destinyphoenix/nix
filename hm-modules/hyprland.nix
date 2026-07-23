@@ -114,7 +114,10 @@
         touchpad.natural_scroll = false;
       };
 
-      gesture = [ "3, horizontal, workspace" ];
+      gesture = [
+        { fingers = 3; direction = "horizontal"; action = "workspace"; }
+        { fingers = 3; direction = "up"; mods = "SUPER"; action = "fullscreen"; }
+      ];
 
       # ---- Keybindings ----
       bind = [
