@@ -6,7 +6,7 @@
 
 {
   imports =
-    [ 
+    [
       ./modules/hyprland.nix
       ./hardware-configuration.nix
     ];
@@ -101,9 +101,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     git
-	kitty
 	zed-editor
 	brave
   #  wget
