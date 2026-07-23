@@ -6,7 +6,7 @@
   };
   services.hypridle.enable = false;
   programs.hyprlock.enable = false;
-  programs.waybar.enable = false
+  programs.waybar.enable = false;
 
 
   # tell Electron/Chromium apps to use Wayland
