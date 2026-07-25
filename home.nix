@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./hm-modules/hyprland.nix
+   # ./hm-modules/hyprland.nix
    # ./hm-modules/waybar.nix
-    #./hm-modules/tofi.nix
+    ./hm-modules/tofi.nix
   #  ./hm-modules/rofi.nix       # installed but unused (your menu is tofi)
    # ./hm-modules/zed.nix
     #./hm-modules/fish.nix
