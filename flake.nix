@@ -15,8 +15,11 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      system = "x86_64-linux";
+  let
+    username = "phoenix";
+    fullName = "phoenix";
+    mail     = "phoenix.l6iz7@passmail.net";
+    system   = "x86_64-linux";
     in {
       nixosConfigurations.phoenix = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -25,11 +28,14 @@
           # chaotic.nixosModules.default   # enable with the cachy input above
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.phoenix = import ./home.nix;
-            # Back up pre-existing files instead of failing the build.
-            home-manager.backupFileExtension = "bak";
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              # Back up pre-existing files instead of failing the build.
+              backupFileExtension = "bak";
+              extraSpecialArgs = { inherit username mail fullName inputs; };
+              users.${username} = import ./home.nix;
+            };
           }
         ];
       };
