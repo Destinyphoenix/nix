@@ -7,8 +7,10 @@
     ./hm-modules/tofi.nix
     ./hm-modules/git.nix
     ./hm-modules/zed.nix
+    ./hm-modules/brave.nix
+    ./hm-modules/hm-sway.nix
     #./hm-modules/fish.nix
-    #   ./hm-modules/starship.nix
+    # ./hm-modules/starship.nix
     #  ./hm-modules/kitty.nix
     # ./hm-modules/nvim.nix
     #   ./hm-modules/packages.nix

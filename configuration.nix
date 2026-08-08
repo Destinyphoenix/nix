@@ -5,11 +5,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./modules/hyprland.nix
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./modules/hyprland.nix
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -85,28 +84,39 @@
   users.users."phoenix" = {
     isNormalUser = true;
     description = "phoenix";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
 
-	programs.fish.enable = true;
+  programs.fish.enable = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     git
-	zed-editor
-	brave
-	obsidian
-  #  wget
+    zed-editor
+    #brave
+    obsidian
+
+    wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -135,6 +145,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "26.05"; # Did you read the comment?
-
 
 }

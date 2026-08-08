@@ -14,26 +14,49 @@
     #   cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-  let
-    username = "phoenix";
-    fullName = "phoenix";
-    mail     = "phoenix.l6iz7@passmail.net";
-    system   = "x86_64-linux";
-    in {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    let
+      username = "phoenix";
+      fullName = "phoenix";
+      mail = "phoenix.l6iz7@passmail.net";
+      system = "x86_64-linux";
+    in
+    {
       nixosConfigurations.phoenix = nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = {
+          inherit
+            username
+            fullName
+            mail
+            inputs
+            ;
+        }; # <-- ADD THIS LINE
         modules = [
           ./configuration.nix
+          ./modules/zsa.nix
+          ./modules/sway.nix
           # chaotic.nixosModules.default   # enable with the cachy input above
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              # Back up pre-existing files instead of failing the build.
               backupFileExtension = "bak";
-              extraSpecialArgs = { inherit username mail fullName inputs; };
+              extraSpecialArgs = {
+                inherit
+                  username
+                  mail
+                  fullName
+                  inputs
+                  ;
+              };
               users.${username} = import ./home.nix;
             };
           }
