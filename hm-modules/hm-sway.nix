@@ -212,7 +212,7 @@ in
 
     settings = {
       # Hintergrundbild wie hyprlock – Pfad an deine Repo-Struktur anpassen:
-      # image = "${./background/feather.png}";
+      image = "${../wallpaper/lock.png}";
       color = "191414"; # hyprlock-BG rgba(25, 20, 20, 1.0)
       font-size = 24;
       indicator-radius = 100;
