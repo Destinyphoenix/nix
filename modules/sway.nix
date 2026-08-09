@@ -15,6 +15,10 @@
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
+  fonts.packages = [
+    pkgs.font-awesome
+    pkgs.nerd-fonts.jetbrains-mono
+  ];
 
   security.polkit.enable = true;
 
