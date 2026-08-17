@@ -55,4 +55,46 @@
     width             = 540
     height            = 250
   '';
+  # WLAN-Picker-Theme (wird von networkmanager_dmenu via --config geladen)
+  xdg.configFile."tofi/network".text = ''
+    # --- Font ---
+    font       = JetBrainsMono Nerd Font
+    font-size  = 13
+
+    # --- Verhalten ---
+    ascii-input        = true
+    hint-font          = false
+    late-keyboard-init = true
+    hide-cursor        = true
+    num-results        = 8
+
+    # --- Fenster / Rahmen (HUD: dünne Cyan-Linie außen, dunkler Stahl-Rahmen) ---
+    background-color = #05080f
+    outline-width    = 1
+    outline-color    = #00d4ff
+    border-width     = 2
+    border-color     = #0b3350
+    corner-radius    = 6
+    width            = 620
+    height           = 440
+    padding-top      = 20
+    padding-bottom   = 20
+    padding-left     = 24
+    padding-right    = 24
+
+    # --- Text ---
+    text-color           = #6fb7e0
+    prompt-color         = #00e5ff
+    input-color          = #e6f7ff
+    placeholder-color    = #2f5170
+    default-result-color = #4f88ad
+
+    # --- Auswahl (leuchtende Zeile mit dunkelblauem Balken) ---
+    selection-color                    = #ffffff
+    selection-match-color              = #00e5ff
+    selection-background               = #0e3a5c
+    selection-background-padding       = 6
+    selection-background-corner-radius = 4
+    result-spacing                     = 8
+  '';
 }

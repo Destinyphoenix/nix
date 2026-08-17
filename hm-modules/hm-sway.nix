@@ -40,14 +40,26 @@ in
       };
 
       # Keine Standard-Swaybar – wir starten waybar über startup.
-      bars = [ ];
+      #bars = [ ];
+      # im wayland.windowManager.sway.config-Block:
+      bars = [
+        {
+          position = "top";
+          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-default.toml";
+          fonts = {
+            names = [ "JetBrainsMono Nerd Font" ];
+            #       names = [ "monospace" ];
+            size = 10.0;
+          };
+        }
+      ];
 
       # exec-once aus der hyprland.conf.
       # hypridle entfällt -> läuft jetzt als services.swayidle (unten).
       # Falls waybar bei dir als systemd-user-Service läuft, hier entfernen.
       startup = [
-        { command = "waybar"; }
-        { command = "nm-applet --indicator"; }
+        #{ command = "waybar"; }
+        #  { command = "nm-applet --indicator"; }
       ];
 
       # Ersetzt die Sway-Standardbindings vollständig durch die
@@ -65,13 +77,14 @@ in
         "Mod4+r" = "exec tofi-drun --drun-launch=true"; # $menu
         "Mod4+b" = "exec brave --password-store=basic";
         "Mod4+f" = "fullscreen"; # fullscreen, 0
+        "Mod4+n" = "exec networkmanager_dmenu"; # WLAN-Picker (tofi)
         # Mod4+p (pseudo, dwindle) hat kein Sway-Äquivalent -> entfällt
 
         # --- Fokus (deine Belegung: j = hoch, k = runter) ---
-        "Mod4+h" = "focus left";
-        "Mod4+l" = "focus right";
-        "Mod4+j" = "focus up";
-        "Mod4+k" = "focus down";
+        "Mod4+Left" = "focus left";
+        "Mod4+Right" = "focus right";
+        "Mod4+Up" = "focus up";
+        "Mod4+Down" = "focus down";
 
         # --- Workspace wechseln ---
         "Mod4+1" = "workspace number 1";
@@ -108,6 +121,9 @@ in
         # --- Farbtemperatur (gammastep statt hyprsunset) ---
         "Mod4+F9" = "exec gammastep -x"; # identity / Filter aus
         "Mod4+F10" = "exec gammastep -O 4000"; # manuell warm
+
+        "Mod4+l" = "exec  ${swaylock} -f";
+        #command = "${swaylock} -f";
       };
     };
 
@@ -149,23 +165,11 @@ in
   services.swayidle = {
     enable = true;
 
-    events = [
-      # vor dem Suspend sperren (before_sleep_cmd)
-      {
-        event = "before-sleep";
-        command = "${swaylock} -f";
-      }
-      # loginctl lock-session -> tatsächliches Sperren
-      {
-        event = "lock";
-        command = "${swaylock} -f";
-      }
-      # nach dem Aufwachen Display wieder an (after_sleep_cmd)
-      {
-        event = "after-resume";
-        command = "${swaymsg} 'output * power on'";
-      }
-    ];
+    events = {
+      before-sleep = "${swaylock} -f";
+      lock = "${swaylock} -f";
+      after-resume = "${swaymsg} 'output * power on'";
+    };
 
     timeouts = [
       # 2.5 min: Monitor-Backlight dimmen (min. statt 0 wg. OLED)
@@ -240,7 +244,9 @@ in
     brightnessctl
     ddcutil
     playerctl
-    networkmanagerapplet # liefert nm-applet
+    kitty
+    nautilus
+    tofi
 
     # --- waylock (zum Testen als swaylock-Alternative) ---
     # waylock
@@ -248,4 +254,37 @@ in
     #   "${pkgs.waylock}/bin/waylock -fork-on-lock"
     # und security.pam.services.waylock im NixOS-Modul aktivieren.
   ];
+  ##########################################################################
+  ### Statusleiste (swaybar + i3status-rust)
+  ##########################################################################
+  programs.i3status-rust = {
+    enable = true;
+    bars.default = {
+      icons = "awesome6";
+      theme = "gruvbox-dark";
+      blocks = [
+        {
+          block = "temperature";
+          interval = 5;
+          format = " $icon $max ";
+        }
+        {
+          block = "cpu";
+          interval = 2;
+        }
+        {
+          block = "memory";
+          format = " $icon $mem_used_percents ";
+        }
+        { block = "sound"; }
+        { block = "battery"; }
+        {
+          block = "time";
+          interval = 5;
+          format = " $timestamp.datetime(f:'%a %d.%m %R') ";
+        }
+      ];
+    };
+  };
+
 }

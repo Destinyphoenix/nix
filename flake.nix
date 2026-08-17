@@ -40,6 +40,7 @@
         }; # <-- ADD THIS LINE
         modules = [
           ./configuration.nix
+          ./modules/network.nix
           ./modules/zsa.nix
           ./modules/sway.nix
           # chaotic.nixosModules.default   # enable with the cachy input above
