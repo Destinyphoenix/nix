@@ -16,9 +16,9 @@ in
     settings = {
       default = {
         path = "${wallpapers}";
-        duration = "15m"; # Wechselintervall
+        duration = "1m"; # Wechselintervall
         sorting = "random"; # oder "ascending" für der-Reihe-nach
-        mode = "fill";
+        mode = "fit";
       };
     };
   };
