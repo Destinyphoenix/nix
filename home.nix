@@ -10,6 +10,7 @@
     ./hm-modules/brave.nix
     ./hm-modules/hm-sway.nix
     ./hm-modules/terminal.nix
+    ./hm-modules/wallpaper.nix
     #./hm-modules/fish.nix
     # ./hm-modules/starship.nix
     #  ./hm-modules/kitty.nix

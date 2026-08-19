@@ -63,13 +63,47 @@
         disabled = false;
         format = "via [$symbol$context]($style) ";
       };
+      nix_shell = {
+        disabled = false;
+        format = "via [❄️ $state( \\($name\\))](bold blue) ";
+      };
+      cmd_duration.min_time = 2000; # ms
     };
   };
 
   # Für propa/pco/pdis: die alte config.fish ging davon aus, dass diese
   # Binaries schon auf dem System sind. Nixpkgs-Namen verifiziert:
-  home.packages = with pkgs; [
-    proton-pass-cli
-    protonvpn-cli
-  ];
+
+  # Kitty als Terminal – wird von hm-sway.nix per `terminal = "kitty"` und
+  # `Mod4+q` aufgerufen. Theme (gruvbox-dark) und Font (JetBrainsMono Nerd
+  # Font) matchen die i3status-rust-Bar aus hm-sway.nix.
+
+  programs.kitty = {
+    enable = true;
+
+    font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 11;
+    };
+
+    themeFile = "gruvbox-dark";
+
+    # Fish als Kitty-interne Shell – ersetzt users.users.phoenix.shell auf
+    # NixOS-Ebene (siehe letzte Antwort, Option A). Fish muss nicht die
+    # Login-Shell sein, kitty startet sie direkt.
+    shellIntegration.enableFishIntegration = true;
+    settings = {
+      shell = "${pkgs.fish}/bin/fish";
+
+      scrollback_lines = 10000;
+      cursor_shape = "beam";
+      window_padding_width = 6;
+      confirm_os_window_close = 0;
+      background_opacity = "0.8";
+
+      # Für Screenshare/Portale ggf. relevant, falls du remote control brauchst:
+      # allow_remote_control = "socket-only";
+      # listen_on = "unix:/tmp/kitty";
+    };
+  };
 }
