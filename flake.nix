@@ -25,6 +25,7 @@
       username = "phoenix";
       fullName = "phoenix";
       mail = "phoenix.l6iz7@passmail.net";
+      theme = import ./theme.nix;
       system = "x86_64-linux";
     in
     {

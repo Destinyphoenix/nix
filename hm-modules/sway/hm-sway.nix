@@ -19,6 +19,10 @@ let
   swaymsg = "${pkgs.sway}/bin/swaymsg";
 in
 {
+  imports = [
+    ./swayidle.nix
+    ./swaylock.nix
+  ];
   wayland.windowManager.sway = {
     enable = true;
 
@@ -171,82 +175,6 @@ in
       # Screenshot: Region -> Zwischenablage (ersetzt hyprshot -m region)
       bindsym Print exec grim -g "$(slurp)" - | wl-copy
     '';
-  };
-
-  ##########################################################################
-  ### Idle-Management (swayidle) – ersetzt hypridle
-  ##########################################################################
-  # Läuft als systemd-user-Service an graphical-session.target.
-  # Timeouts 1:1 aus deiner hypridle.conf übernommen.
-  services.swayidle = {
-    enable = true;
-
-    events = {
-      before-sleep = "${swaylock} -f";
-      lock = "${swaylock} -f";
-      after-resume = "${swaymsg} 'output * power on'";
-    };
-
-    timeouts = [
-      # 2.5 min: Monitor-Backlight dimmen (min. statt 0 wg. OLED)
-      {
-        timeout = 150;
-        command = "brightnessctl -s set 10";
-        resumeCommand = "brightnessctl -r";
-      }
-      # 2.5 min: Tastatur-Backlight aus
-      {
-        timeout = 150;
-        command = "brightnessctl -sd rgb:kbd_backlight set 0";
-        resumeCommand = "brightnessctl -rd rgb:kbd_backlight";
-      }
-      # 5 min: sperren (über loginctl -> löst das 'lock'-Event oben aus)
-      {
-        timeout = 300;
-        command = "loginctl lock-session";
-      }
-      # 5.5 min: Bildschirm aus (ersetzt hyprctl dispatch dpms off)
-      {
-        timeout = 330;
-        command = "${swaymsg} 'output * power off'";
-        resumeCommand = "${swaymsg} 'output * power on' && brightnessctl -r";
-      }
-      # 30 min: Suspend
-      {
-        timeout = 1800;
-        command = "systemctl suspend";
-      }
-    ];
-  };
-
-  ##########################################################################
-  ### Screen-Lock (swaylock) – ersetzt hyprlock
-  ##########################################################################
-  # PAM wird durch programs.sway.enable (NixOS-Modul) automatisch gesetzt.
-  # Farben grob aus deiner hyprlock.conf gemappt.
-  programs.swaylock = {
-    enable = true;
-    package = pkgs.swaylock;
-    # Alternative mit Blur/Screenshot-Effekten (Look näher an hyprlock):
-    # package = pkgs.swaylock-effects;
-
-    settings = {
-      # Hintergrundbild wie hyprlock – Pfad an deine Repo-Struktur anpassen:
-      image = "${../wallpaper/lock.png}";
-      color = "191414"; # hyprlock-BG rgba(25, 20, 20, 1.0)
-      font-size = 24;
-      indicator-radius = 100;
-      indicator-thickness = 7;
-      show-failed-attempts = true;
-
-      # grob gemappt aus deiner hyprlock.conf:
-      ring-color = "151515"; # outer_color rgb(151515)
-      inside-color = "c8c8c8"; # inner_color rgb(200,200,200)
-      text-color = "0a0a0a"; # font_color rgb(10,10,10)
-      key-hl-color = "cc8822"; # check_color rgb(204,136,34)
-      ring-ver-color = "cc8822";
-      ring-wrong-color = "cc2222"; # fail_color rgb(204,34,34)
-    };
   };
 
   # Werkzeuge, die die Bindings/Autostarts/Lock aufrufen.
