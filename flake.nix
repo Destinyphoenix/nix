@@ -43,6 +43,7 @@
           ./modules/network.nix
           ./modules/zsa.nix
           ./modules/sway.nix
+          ./modules/terminal.nix
           # chaotic.nixosModules.default   # enable with the cachy input above
           home-manager.nixosModules.home-manager
           {

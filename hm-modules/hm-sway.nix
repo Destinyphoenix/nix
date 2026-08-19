@@ -4,6 +4,12 @@
   pkgs,
   ...
 }:
+# Quick reference for sway's modifier names:
+
+# Mod1 = Alt
+# Mod4 = Super/Windows key (your $mainMod)
+# Shift = Shift (used as-is, no Mod number)
+# Ctrl/Control = Ctrl (also used as-is)
 
 # Sway – portiert aus der bestehenden hyprland.conf.
 # Enthält zusätzlich Idle-Management (swayidle) und Screen-Lock (swaylock)
@@ -58,6 +64,7 @@ in
       # hypridle entfällt -> läuft jetzt als services.swayidle (unten).
       # Falls waybar bei dir als systemd-user-Service läuft, hier entfernen.
       startup = [
+        { command = "swaysome init"; }
         #{ command = "waybar"; }
         #  { command = "nm-applet --indicator"; }
       ];
@@ -86,30 +93,39 @@ in
         "Mod4+Up" = "focus up";
         "Mod4+Down" = "focus down";
 
-        # --- Workspace wechseln ---
-        "Mod4+1" = "workspace number 1";
-        "Mod4+2" = "workspace number 2";
-        "Mod4+3" = "workspace number 3";
-        "Mod4+4" = "workspace number 4";
-        "Mod4+5" = "workspace number 5";
-        "Mod4+6" = "workspace number 6";
-        "Mod4+7" = "workspace number 7"; # war in hyprland.conf doppelt belegt -> korrigiert
-        "Mod4+8" = "workspace number 8"; # war per Tastatur nicht erreichbar -> ergänzt
-        "Mod4+9" = "workspace number 9";
-        "Mod4+0" = "workspace number 10";
+        # --- Workspace wechseln (swaysome: pro Output namespaced) ---
+        "Mod4+1" = "exec swaysome focus 1";
+        "Mod4+2" = "exec swaysome focus 2";
+        "Mod4+3" = "exec swaysome focus 3";
+        "Mod4+4" = "exec swaysome focus 4";
+        "Mod4+5" = "exec swaysome focus 5";
+        "Mod4+6" = "exec swaysome focus 6";
+        "Mod4+7" = "exec swaysome focus 7";
+        "Mod4+8" = "exec swaysome focus 8";
+        "Mod4+9" = "exec swaysome focus 9";
+        "Mod4+0" = "exec swaysome focus 0";
 
-        # --- Fenster auf Workspace verschieben ---
-        "Mod4+Shift+1" = "move container to workspace number 1";
-        "Mod4+Shift+2" = "move container to workspace number 2";
-        "Mod4+Shift+3" = "move container to workspace number 3";
-        "Mod4+Shift+4" = "move container to workspace number 4";
-        "Mod4+Shift+5" = "move container to workspace number 5";
-        "Mod4+Shift+6" = "move container to workspace number 6";
-        "Mod4+Shift+7" = "move container to workspace number 7";
-        "Mod4+Shift+8" = "move container to workspace number 8";
-        "Mod4+Shift+9" = "move container to workspace number 9";
-        "Mod4+Shift+0" = "move container to workspace number 10";
+        # --- Fenster auf Workspace verschieben (swaysome) ---
+        "Mod4+Shift+1" = "exec swaysome move 1";
+        "Mod4+Shift+2" = "exec swaysome move 2";
+        "Mod4+Shift+3" = "exec swaysome move 3";
+        "Mod4+Shift+4" = "exec swaysome move 4";
+        "Mod4+Shift+5" = "exec swaysome move 5";
+        "Mod4+Shift+6" = "exec swaysome move 6";
+        "Mod4+Shift+7" = "exec swaysome move 7";
+        "Mod4+Shift+8" = "exec swaysome move 8";
+        "Mod4+Shift+9" = "exec swaysome move 9";
+        "Mod4+Shift+0" = "exec swaysome move 0";
 
+        # --- Multi-Monitor (swaysome) ---
+        "Mod4+Mod1+1" = "exec swaysome focus-group 1";
+        "Mod4+Mod1+2" = "exec swaysome focus-group 2";
+        "Mod4+Mod1+3" = "exec swaysome focus-group 3";
+        "Mod4+Mod1+o" = "exec swaysome workspace-group-next-output";
+        # --- Fenster in andere Output-Gruppe verschieben (swaysome) ---
+        "Mod4+Mod1+Shift+1" = "exec swaysome move-to-group 0";
+        "Mod4+Mod1+Shift+2" = "exec swaysome move-to-group 1";
+        "Mod4+Mod1+Shift+3" = "exec swaysome move-to-group 2";
         # --- Scratchpad (magic) ---
         "Mod4+s" = "scratchpad show"; # togglespecialworkspace magic
         "Mod4+Shift+s" = "move scratchpad"; # movetoworkspace special:magic
@@ -247,6 +263,7 @@ in
     kitty
     nautilus
     tofi
+    swaysome
 
     # --- waylock (zum Testen als swaylock-Alternative) ---
     # waylock
