@@ -6,7 +6,7 @@
 let
   wallpapers = pkgs.runCommand "wallpapers" { } ''
     mkdir -p $out
-    cp ${../wallpaper}/*.png $out/
+    cp ${../../wallpaper}/*.png $out/
     rm -f $out/lock.png
   '';
 in
@@ -16,9 +16,9 @@ in
     settings = {
       default = {
         path = "${wallpapers}";
-        duration = "1m"; # Wechselintervall
+        duration = "1h"; # Wechselintervall
         sorting = "random"; # oder "ascending" für der-Reihe-nach
-        mode = "fit";
+        mode = "fit"; # expected one of `stretch`, `center`, `fit`, `tile`, `fit-border-color`
       };
     };
   };

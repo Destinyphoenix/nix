@@ -41,10 +41,12 @@
         }; # <-- ADD THIS LINE
         modules = [
           ./configuration.nix
+          ./modules/login.nix
           ./modules/network.nix
           ./modules/zsa.nix
           ./modules/sway.nix
           ./modules/terminal.nix
+          ./modules/cleanup.nix
           # chaotic.nixosModules.default   # enable with the cachy input above
           home-manager.nixosModules.home-manager
           {
@@ -57,6 +59,7 @@
                   username
                   mail
                   fullName
+                  theme
                   inputs
                   ;
               };

@@ -6,7 +6,6 @@
 
 {
   imports = [
-    ./modules/hyprland.nix
     ./hardware-configuration.nix
   ];
 
@@ -38,22 +37,6 @@
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
   };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the Cinnamon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "";
-  };
-
-  # Configure console keymap
-  console.keyMap = "de";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -93,6 +76,7 @@
   programs.firefox.enable = true;
 
   programs.fish.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nix.settings = {

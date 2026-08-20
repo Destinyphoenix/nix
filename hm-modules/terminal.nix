@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, theme, ... }:
 
 # Fish + Starship gebündelt, da beide eng zusammenhängen (Starship braucht
 # die Fish-Integration). 1:1 portiert aus der alten
@@ -13,6 +13,7 @@
       propa = "pass-cli";
       pdis = "protonvpn disconnect";
       pco = "protonvpn connect --country DE --securecore";
+      nire = "sudo nixos-rebuild switch --flake ~/nixos#phoenix";
     };
 
     interactiveShellInit = ''
@@ -30,15 +31,14 @@
 
   programs.starship = {
     enable = true;
-    enableFishIntegration = true; # ersetzt `starship init fish | source`
+    enableFishIntegration = true;
 
-    # 1:1 aus der alten starship.toml.
     settings = {
       add_newline = true;
 
       character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[✖](bold red)";
+        success_symbol = "[➜](bold ${theme.success})";
+        error_symbol = "[✖](bold ${theme.error})";
       };
 
       package.disabled = false;
@@ -59,7 +59,7 @@
         only_with_files = true;
         detect_extensions = [ ];
         detect_folders = [ ];
-        style = "blue bold";
+        style = "bold ${theme.info}";
         disabled = false;
         format = "via [$symbol$context]($style) ";
       };
@@ -82,28 +82,49 @@
     enable = true;
 
     font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 11;
+      name = theme.font;
+      size = theme.fontSize;
     };
 
-    themeFile = "gruvbox-dark";
-
-    # Fish als Kitty-interne Shell – ersetzt users.users.phoenix.shell auf
-    # NixOS-Ebene (siehe letzte Antwort, Option A). Fish muss nicht die
-    # Login-Shell sein, kitty startet sie direkt.
     shellIntegration.enableFishIntegration = true;
     settings = {
       shell = "${pkgs.fish}/bin/fish";
+
+      background = theme.background;
+      foreground = theme.foreground;
+      cursor = theme.primary;
+      cursor_text_color = theme.background;
+
+      selection_background = theme.surface;
+      selection_foreground = theme.foreground;
+
+      url_color = theme.warning;
+
+      # --- ANSI 0-7 ---
+      color0 = theme.background;
+      color1 = theme.error;
+      color2 = theme.success;
+      color3 = theme.warning;
+      color4 = theme.info;
+      color5 = "#b3552e"; # magenta -> burnt sienna (kein Kern-Token, nur ANSI-Ergänzung)
+      color6 = "#4f8a80"; # cyan -> gedämpftes Teal (kein Kern-Token, nur ANSI-Ergänzung)
+      color7 = "#cfc3b8";
+
+      # --- ANSI 8-15 (bright) ---
+      color8 = theme.border;
+      color9 = theme.primary;
+      color10 = "#b3c17a";
+      color11 = "#ffd97a";
+      color12 = "#6f93b8";
+      color13 = "#d97a4d";
+      color14 = "#74b0a5";
+      color15 = theme.foreground;
 
       scrollback_lines = 10000;
       cursor_shape = "beam";
       window_padding_width = 6;
       confirm_os_window_close = 0;
       background_opacity = "0.8";
-
-      # Für Screenshare/Portale ggf. relevant, falls du remote control brauchst:
-      # allow_remote_control = "socket-only";
-      # listen_on = "unix:/tmp/kitty";
     };
   };
 }
