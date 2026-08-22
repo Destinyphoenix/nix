@@ -31,7 +31,7 @@
     # these without them polluting your global environment.
     extraPackages = with pkgs; [
       nixd # Nix LSP. Your reference flake uses `nil` instead — swap if preferred.
-      nixfmt-rfc-style # formatter for Nix
+      nixfmt # formatter for Nix
     ];
 
     # Auto-installed on startup. Names are repo names from

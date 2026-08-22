@@ -27,6 +27,7 @@
     commandLineArgs = [
       "--ozone-platform-hint=auto"
       "--enable-wayland-ime"
+      "--force-dark-mode"
     ];
   };
 }

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  theme,
   ...
 }:
 # Quick reference for sway's modifier names:
@@ -36,9 +37,13 @@ in
       # Entspricht deinen Hyprland-Binds  bindm mouse:272 / mouse:273.
       floating.modifier = "Mod4";
 
+      window = {
+        border = 2;
+        titlebar = false;
+      };
       gaps = {
-        inner = 5; # gaps_in
-        outer = 20; # gaps_out
+        inner = 8; # 5
+        outer = 4; # 20
       };
 
       input = {
@@ -59,9 +64,8 @@ in
           position = "top";
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-default.toml";
           fonts = {
-            names = [ "JetBrainsMono Nerd Font" ];
-            #       names = [ "monospace" ];
-            size = 10.0;
+            names = [ theme.font ];
+            size = theme.fontSize * 1.0;
           };
         }
       ];
@@ -71,6 +75,7 @@ in
       # Falls waybar bei dir als systemd-user-Service läuft, hier entfernen.
       startup = [
         { command = "swaysome init"; }
+
         #{ command = "waybar"; }
         #  { command = "nm-applet --indicator"; }
       ];
@@ -178,7 +183,6 @@ in
       bindsym Print exec grim -g "$(slurp)" - | wl-copy
     '';
   };
-
   # Werkzeuge, die die Bindings/Autostarts/Lock aufrufen.
   # kitty, nautilus, waybar, tofi und brave werden als bereits anderswo
   # verwaltet angenommen – falls nicht, hier ergänzen.
