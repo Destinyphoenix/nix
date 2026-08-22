@@ -31,6 +31,12 @@
         { block = "sound"; }
         { block = "battery"; }
         {
+          block = "net";
+          format = " $icon {$ssid $signal_strength|Wired} ";
+          format_alt = " $icon $speed_up.eng(prefix:K) / $speed_down.eng(prefix:K) ";
+          interval = 5;
+        }
+        {
           block = "time";
           interval = 5;
           format = " $timestamp.datetime(f:'%a %d.%m %R') ";

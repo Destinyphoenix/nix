@@ -13,7 +13,7 @@
 # Consequence of mutableUserSettings = true: userSettings act as a *floor*, not a
 # lock. Zed can override them at runtime. If you ever want settings fully pinned,
 # flip it to false — but then Zed cannot save any preference to disk.
-{ pkgs, ... }:
+{ pkgs, theme, ... }:
 
 {
   programs.zed-editor = {
@@ -40,6 +40,8 @@
       "nix"
       "toml"
       "fish"
+      "color-highlight"
+      "color-lsp"
     ];
 
     userSettings = {
@@ -48,7 +50,7 @@
       # --- Fonts ------------------------------------------------------------
       # Matches the Noto Sans Mono you use in tofi. Change freely — this is the
       # one block I had no existing source of truth for.
-      buffer_font_family = "Noto Sans Mono";
+      buffer_font_family = theme.font; # Noto Sans Mono
       buffer_font_size = 15;
       ui_font_size = 15;
 
@@ -57,7 +59,16 @@
         metrics = false;
         diagnostics = false;
       };
-      features.edit_prediction_provider = "none";
+      #edit_predictions.provider = "none"; # disables edit prediction (AI autocomplete) entirely
+      edit_predictions = {
+        provider = "ollama";
+        ollama = {
+          api_url = "http://localhost:11434";
+          model = "qwen2.5-coder:1.5b-base";
+          prompt_format = "infer";
+          max_output_tokens = 512;
+        };
+      };
 
       # --- Editor behaviour -------------------------------------------------
       format_on_save = "on";
@@ -67,8 +78,15 @@
       # --- Nix language server ----------------------------------------------
       languages.Nix.language_servers = [ "nixd" ];
       lsp.nixd.settings.formatting.command = [ "nixfmt" ];
-    };
 
+      project_panel = {
+        dock = "right";
+        git_status = true;
+      };
+      outline_panel.dock = "right";
+      collaboration_panel.dock = "right";
+      git_panel.dock = "right";
+    };
     # Faithful port of .config/zed/keymap.json.
     userKeymaps = [
       {
