@@ -5,76 +5,88 @@
 #
 # Launched from Hyprland with:  tofi-drun --drun-launch=true
 #
-# Font note: on Arch you pointed `font` at a .ttf path under /usr/share/fonts.
-# That path does not exist on NixOS. Two options below — the default uses the
-# Pango backend (font by family name), which is the robust, reproducible choice.
-{ pkgs, ... }:
+# Zwei Configs, beide aus dem Phoenix-Ember-Theme (theme.nix) gespeist, damit
+# Launcher und WLAN-Picker farblich zu Bar/Terminal passen:
+#   tofi/config  – drun-Launcher (Mod4+r)
+#   tofi/network – WLAN-Picker (networkmanager_dmenu --config, Mod4+n)
+{ pkgs, theme, ... }:
 
 {
   home.packages = [
     pkgs.tofi
-    # Provides the "Noto Sans Mono" family referenced below. If you already
-    # install Noto elsewhere (a shared fonts module), drop this line.
-    pkgs.noto-fonts
+    # Nerd-Font (theme.font) kommt bereits systemweit aus modules/sway.nix
+    # (fonts.packages -> pkgs.nerd-fonts.jetbrains-mono). Kein weiteres
+    # Font-Paket hier nötig.
   ];
 
   xdg.configFile."tofi/config".text = ''
-    # --- Font ---------------------------------------------------------------
-    # Pango backend: reference the family name. Requires the font package
-    # installed (above) and fonts.fontconfig.enable = true (already set in
-    # your home.nix). `hint-font` is ignored on this backend.
-    font = Noto Sans Mono
+    # --- Font -----------------------------------------------------------
+    # Pango backend: Family-Name reicht, solange fonts.fontconfig.enable
+    # gesetzt ist. `hint-font` wirkt nur beim Harfbuzz-Backend, hier egal.
+    font      = ${theme.font}
+    font-size = ${toString theme.fontSize}
 
-    # Harfbuzz backend alternative (faster, no font fallback). To use it,
-    # comment the line above and point at a real store path, e.g.:
-    #   font = ${pkgs.noto-fonts}/share/fonts/noto/NotoSansMono-Regular.ttf
-    # Verify the actual filename first — Noto ships variable fonts in current
-    # nixpkgs, so it may be NotoSansMono[wdth,wght].ttf. Check with:
-    #   ls ${pkgs.noto-fonts}/share/fonts/noto/ | grep -i mono
-    # Only with this backend does `hint-font = false` take effect.
-
-    # --- Input / behaviour --------------------------------------------------
-    ascii-input       = true
-    hint-font         = false
+    # --- Input / Verhalten ------------------------------------------------
+    ascii-input        = true
+    hint-font          = false
     late-keyboard-init = true
-    hide-cursor       = true
-    num-results       = 3
+    hide-cursor        = true
+    num-results        = 6
+    prompt-text        = "❯ "
 
-    # --- Theme (green-on-black terminal) ------------------------------------
-    corner-radius     = 60
-    outline-color     = #D3D1B9
-    outline-width     = 3
-    border-color      = #E3E1C9
+    # --- Phoenix Ember -------------------------------------------------
+    # background-color trägt einen Alpha-Kanal (RRGGBBAA). CC ~ 80% Deckkraft,
+    # gleicher Wert wie background_opacity = 0.8 in kitty.nix.
+    corner-radius     = 14
+    outline-width     = 2
+    outline-color     = ${theme.primary}
     border-width      = 1
-    background-color  = #000000
-    text-color        = #0A3
-    selection-color   = #0F6
-    # prompt-text     = "C:\> "
+    border-color      = ${theme.border}
+    background-color  = ${theme.background}CC
 
-    # --- Size ---------------------------------------------------------------
-    width             = 540
-    height            = 250
+    text-color            = ${theme.muted}
+    prompt-color          = ${theme.primary}
+    input-color           = ${theme.foreground}
+    placeholder-color     = ${theme.muted}
+    default-result-color  = ${theme.muted}
+
+    # ausgewählte Zeile: heller Ember-Balken, dunkler Text für Kontrast
+    selection-color                    = ${theme.background}
+    selection-match-color              = ${theme.surface}
+    selection-background               = ${theme.primary}
+    selection-background-padding       = 6
+    selection-background-corner-radius = 8
+    result-spacing                     = 4
+
+    # --- Größe ------------------------------------------------------------
+    width  = 560
+    height = 320
   '';
-  # WLAN-Picker-Theme (wird von networkmanager_dmenu via --config geladen)
-  xdg.configFile."tofi/network".text = ''
-    # --- Font ---
-    font       = JetBrainsMono Nerd Font
-    font-size  = 13
 
-    # --- Verhalten ---
+  # WLAN-Picker-Theme (wird von networkmanager_dmenu via --config geladen).
+  # Gleiche Palette wie oben, nur größeres Fenster für mehr Netzwerke/Details.
+  xdg.configFile."tofi/network".text = ''
+    # --- Font ---------------------------------------------------------
+    font      = ${theme.font}
+    font-size = ${toString theme.fontSize}
+
+    # --- Verhalten ----------------------------------------------------
     ascii-input        = true
     hint-font          = false
     late-keyboard-init = true
     hide-cursor        = true
     num-results        = 8
+    prompt-text        = "📶 "
 
-    # --- Fenster / Rahmen (HUD: dünne Cyan-Linie außen, dunkler Stahl-Rahmen) ---
-    background-color = #05080f
-    outline-width    = 1
-    outline-color    = #00d4ff
-    border-width     = 2
-    border-color     = #0b3350
-    corner-radius    = 6
+    # --- Phoenix Ember --------------------------------------------------
+    # background-color trägt einen Alpha-Kanal (RRGGBBAA), analog zu
+    # background_opacity = 0.8 in kitty.nix.
+    background-color = ${theme.background}CC
+    outline-width    = 2
+    outline-color    = ${theme.primary}
+    border-width     = 1
+    border-color     = ${theme.border}
+    corner-radius     = 10
     width            = 620
     height           = 440
     padding-top      = 20
@@ -82,17 +94,17 @@
     padding-left     = 24
     padding-right    = 24
 
-    # --- Text ---
-    text-color           = #6fb7e0
-    prompt-color         = #00e5ff
-    input-color          = #e6f7ff
-    placeholder-color    = #2f5170
-    default-result-color = #4f88ad
+    # --- Text -----------------------------------------------------------
+    text-color            = ${theme.muted}
+    prompt-color          = ${theme.primary}
+    input-color           = ${theme.foreground}
+    placeholder-color     = ${theme.muted}
+    default-result-color  = ${theme.muted}
 
-    # --- Auswahl (leuchtende Zeile mit dunkelblauem Balken) ---
-    selection-color                    = #ffffff
-    selection-match-color              = #00e5ff
-    selection-background               = #0e3a5c
+    # --- Auswahl (Ember-Balken, wie im Launcher) ------------------------
+    selection-color                    = ${theme.background}
+    selection-match-color              = ${theme.surface}
+    selection-background               = ${theme.primary}
     selection-background-padding       = 6
     selection-background-corner-radius = 4
     result-spacing                     = 8
