@@ -87,6 +87,15 @@
     auto-optimise-store = true;
   };
 
+  programs.nix-ld.enable = true; # compability
+
+  # Automatik updates
+  system.autoUpgrade = {
+    enable = true;
+    dates = "weekly";
+  };
+
+  programs.sniffnet.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -118,6 +127,9 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  specialisation = {
+    gaming.configuration = import ./specialisations/gaming.nix;
+  };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

@@ -59,16 +59,16 @@
         metrics = false;
         diagnostics = false;
       };
-      #edit_predictions.provider = "none"; # disables edit prediction (AI autocomplete) entirely
-      edit_predictions = {
-        provider = "ollama";
-        ollama = {
-          api_url = "http://localhost:11434";
-          model = "qwen2.5-coder:1.5b-base";
-          prompt_format = "infer";
-          max_output_tokens = 512;
-        };
-      };
+      edit_predictions.provider = "none"; # disables edit prediction (AI autocomplete) entirely
+      # edit_predictions = {
+      #   provider = "ollama";
+      #   ollama = {
+      #     api_url = "http://localhost:11434";
+      #     model = "qwen2.5-coder:1.5b-base";
+      #     prompt_format = "infer";
+      #     max_output_tokens = 512;
+      #   };
+      # };
 
       # --- Editor behaviour -------------------------------------------------
       format_on_save = "on";

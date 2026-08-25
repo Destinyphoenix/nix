@@ -48,7 +48,8 @@
           ./modules/terminal.nix
           ./modules/cleanup.nix
           ./modules/brave-policies.nix
-          ./modules/ollama.nix
+          ./specialisations/gaming.nix
+          #./modules/ollama.nix
           # chaotic.nixosModules.default   # enable with the cachy input above
           home-manager.nixosModules.home-manager
           {

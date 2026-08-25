@@ -25,6 +25,7 @@ in
     ./swaylock.nix
     ./swaybar.nix
     ./wallpaper.nix
+    ./../yazi.nix
   ];
   wayland.windowManager.sway = {
     enable = true;
@@ -91,6 +92,7 @@ in
         "Mod4+c" = "kill"; # killactive
         "Mod4+m" = "exit"; # exit
         "Mod4+e" = "exec nautilus"; # $fileManager
+        "Mod4+Shift+e" = "exec kitty --title yazi -e yazi"; # terminal Dateimanager
         "Mod4+v" = "floating toggle"; # togglefloating
         "Mod4+r" = "exec tofi-drun --drun-launch=true"; # $menu
         "Mod4+b" = "exec brave --password-store=basic";
@@ -181,6 +183,12 @@ in
 
       # Screenshot: Region -> Zwischenablage (ersetzt hyprshot -m region)
       bindsym Print exec grim -g "$(slurp)" - | wl-copy
+
+      # yazi
+      for_window [app_id="^yazi$"] floating enable
+        for_window [app_id="^yazi$"] resize set 900 640
+        for_window [app_id="^yazi$"] move position center
+        for_window [app_id="^yazi$"] border pixel 2
     '';
   };
   # Werkzeuge, die die Bindings/Autostarts/Lock aufrufen.
