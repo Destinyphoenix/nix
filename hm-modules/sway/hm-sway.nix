@@ -92,7 +92,8 @@ in
         "Mod4+c" = "kill"; # killactive
         "Mod4+m" = "exit"; # exit
         "Mod4+e" = "exec nautilus"; # $fileManager
-        "Mod4+Shift+e" = "exec kitty --title yazi -e yazi"; # terminal Dateimanager
+        #"Mod4+Shift+e" = "exec kitty --title yazi -e yazi"; # terminal Dateimanager
+        "Mod4+Shift+e" = "exec kitty --class yazi --title yazi -e yazi"; # terminal Dateimanager, floatend
         "Mod4+v" = "floating toggle"; # togglefloating
         "Mod4+r" = "exec tofi-drun --drun-launch=true"; # $menu
         "Mod4+b" = "exec brave --password-store=basic";

@@ -17,11 +17,19 @@ let
   italic = style: style // { italic = true; };
 in
 {
+
   programs.yazi = {
     enable = true;
     enableFishIntegration = true; # `y`-Wrapper: cd ins letzte Verzeichnis beim Beenden
     shellWrapperName = "y";
-
+    keymap.mgr.prepend_keymap = [
+      {
+        on = [ "T" ];
+        #run = "shell 'kitty -e fish' --confirm";
+        run = ''shell "$SHELL" --block'';
+        desc = "Terminal im aktuellen Verzeichnis öffnen";
+      }
+    ];
     settings = {
       mgr = {
         ratio = [
@@ -106,8 +114,9 @@ in
         parent = {
           fg = theme.muted;
         };
-        current = {
-          fg = theme.primary;
+        current = bold {
+          fg = theme.background;
+          bg = theme.primary;
         };
         preview = {
           fg = theme.muted;
@@ -415,4 +424,5 @@ in
     jq # JSON-Preview
     poppler # PDF-Preview
   ];
+  # in hm-modules/yazi.nix, als neue Top-Level-Option neben settings/theme:
 }
