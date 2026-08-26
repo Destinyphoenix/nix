@@ -75,8 +75,6 @@
   # Install firefox.
   programs.firefox.enable = true;
 
-  programs.fish.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nix.settings = {
@@ -93,6 +91,7 @@
   system.autoUpgrade = {
     enable = true;
     dates = "weekly";
+    flake = "github:Destinyphoenix/nix#phoenix";
   };
 
   programs.sniffnet.enable = true;
@@ -127,9 +126,6 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  specialisation = {
-    gaming.configuration = import ./specialisations/gaming.nix;
-  };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

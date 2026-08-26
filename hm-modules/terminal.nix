@@ -14,6 +14,7 @@
       pdis = "protonvpn disconnect";
       pco = "protonvpn connect --country DE --securecore";
       nire = "sudo nixos-rebuild switch --flake ~/nixos#phoenix";
+      update = "nix flake update";
     };
 
     interactiveShellInit = ''
