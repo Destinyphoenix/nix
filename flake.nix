@@ -49,6 +49,8 @@
           ./modules/cleanup.nix
           ./modules/brave-policies.nix
           ./specialisations/gaming.nix
+          ./modules/docker.nix
+          ./modules/bluetooth.nix
           #./modules/ollama.nix
           # chaotic.nixosModules.default   # enable with the cachy input above
           home-manager.nixosModules.home-manager

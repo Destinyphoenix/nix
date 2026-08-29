@@ -4,12 +4,13 @@
   imports = [
     # ./hm-modules/hyprland.nix
     # ./hm-modules/waybar.nix
-    ./hm-modules/tofi.nix
+    ./hm-modules/tofi/tofi.nix
     ./hm-modules/git.nix
     ./hm-modules/zed.nix
     ./hm-modules/brave.nix
     ./hm-modules/sway/hm-sway.nix
     ./hm-modules/terminal.nix
+    ./hm-modules/tofi/bluetooth.nix
     #./hm-modules/fish.nix
     # ./hm-modules/starship.nix
     #  ./hm-modules/kitty.nix

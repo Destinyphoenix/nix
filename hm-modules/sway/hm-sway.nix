@@ -153,6 +153,7 @@ in
         "Mod4+F10" = "exec gammastep -O 4000"; # manuell warm
 
         "Mod4+l" = "exec  ${swaylock} -f";
+        "Mod4+Shift+b" = "exec tofi-bluetooth"; # Bluetooth-Picker (tofi)
         #command = "${swaylock} -f";
       };
     };

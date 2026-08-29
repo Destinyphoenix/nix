@@ -8,6 +8,13 @@
 let
   swaylock = lib.getExe config.programs.swaylock.package;
   swaymsg = "${pkgs.sway}/bin/swaymsg";
+  # Wichtig: swayidle läuft mit PATH=nur-bash (siehe HM-Modul-Source),
+  # daher müssen ALLE Kommandos absolute Store-Pfade sein.
+  brightnessctl = lib.getExe pkgs.brightnessctl;
+  loginctl = "${lib.getBin pkgs.systemd}/bin/loginctl";
+  systemctl = "${lib.getBin pkgs.systemd}/bin/systemctl";
+  # Schutz gegen doppelt gestartetes swaylock (ersetzt "pidof hyprlock || hyprlock")
+  lockCmd = "${pkgs.procps}/bin/pgrep -x swaylock || ${swaylock} -f";
 in
 {
   ##########################################################################
@@ -19,8 +26,8 @@ in
     enable = true;
 
     events = {
-      before-sleep = "${swaylock} -f";
-      lock = "${swaylock} -f";
+      before-sleep = lockCmd;
+      lock = lockCmd;
       after-resume = "${swaymsg} 'output * power on'";
     };
 
@@ -28,30 +35,30 @@ in
       # 2.5 min: Monitor-Backlight dimmen (min. statt 0 wg. OLED)
       {
         timeout = 150;
-        command = "brightnessctl -s set 10";
-        resumeCommand = "brightnessctl -r";
+        command = "${brightnessctl} -s set 10";
+        resumeCommand = "${brightnessctl} -r";
       }
       # 2.5 min: Tastatur-Backlight aus
       {
         timeout = 150;
-        command = "brightnessctl -sd rgb:kbd_backlight set 0";
-        resumeCommand = "brightnessctl -rd rgb:kbd_backlight";
+        command = "${brightnessctl} -sd rgb:kbd_backlight set 0";
+        resumeCommand = "${brightnessctl} -rd rgb:kbd_backlight";
       }
       # 5 min: sperren (über loginctl -> löst das 'lock'-Event oben aus)
       {
         timeout = 300;
-        command = "loginctl lock-session";
+        command = "${loginctl} lock-session";
       }
       # 5.5 min: Bildschirm aus (ersetzt hyprctl dispatch dpms off)
       {
         timeout = 330;
         command = "${swaymsg} 'output * power off'";
-        resumeCommand = "${swaymsg} 'output * power on' && brightnessctl -r";
+        resumeCommand = "${swaymsg} 'output * power on' && ${brightnessctl} -r";
       }
       # 30 min: Suspend
       {
         timeout = 1800;
-        command = "systemctl suspend";
+        command = "${systemctl} suspend";
       }
     ];
   };
