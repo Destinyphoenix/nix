@@ -26,13 +26,13 @@
         ./configuration.nix
         ./modules/login.nix
         ./modules/network.nix
-        ./modules/zsa.nix
+        #./modules/zsa.nix
         ./modules/sway.nix
         ./modules/terminal.nix
         ./modules/cleanup.nix
         ./modules/brave-policies.nix
-        ./specialisations/gaming.nix
-        ./modules/docker.nix
+        #./specialisations/gaming.nix
+        #./modules/docker.nix
         ./modules/bluetooth.nix
       ];
 
@@ -107,6 +107,7 @@
                       fullName
                       theme
                       inputs
+                      hostname
                       ;
                     homeModules = homeModules ++ extraHomeModules;
                   };

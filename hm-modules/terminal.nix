@@ -3,6 +3,7 @@
   theme,
   lib,
   config,
+  hostname,
   ...
 }:
 
@@ -24,7 +25,7 @@
       propa = "pass-cli";
       pdis = "protonvpn disconnect";
       pco = "protonvpn connect --country DE --securecore";
-      nire = "sudo nixos-rebuild switch --flake ~/nixos#phoenix";
+      nire = "sudo nixos-rebuild switch --flake ~/nixos#${hostname}";
       update = "nix flake update";
       clean = "sudo nix-collect-garbage --delete-older-than 10d";
     };
