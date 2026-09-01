@@ -1,9 +1,20 @@
-{ pkgs, theme, ... }:
+{
+  pkgs,
+  theme,
+  lib,
+  config,
+  ...
+}:
 
 # Fish + Starship gebündelt, da beide eng zusammenhängen (Starship braucht
 # die Fish-Integration). 1:1 portiert aus der alten
 # dot/.config/fish/config.fish + dot/.config/starship.toml.
 {
+  # options = {
+  #   terminal.enable = lib.mkEnableOption "enable terminal";
+  # };
+  # config = lib.mkIf config.terminal.enable{
+
   programs.fish = {
     enable = true;
 
@@ -15,6 +26,7 @@
       pco = "protonvpn connect --country DE --securecore";
       nire = "sudo nixos-rebuild switch --flake ~/nixos#phoenix";
       update = "nix flake update";
+      clean = "sudo nix-collect-garbage --delete-older-than 10d";
     };
 
     interactiveShellInit = ''
@@ -128,4 +140,6 @@
       background_opacity = "0.8";
     };
   };
+
+  #  };
 }

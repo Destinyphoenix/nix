@@ -10,7 +10,7 @@
   ### System-Ebene (NixOS)
   ####################################################################
   networking = {
-    hostName = "nixos";
+    # hostName = "nixos";
 
     # NetworkManager als Backend (WLAN, LAN, VPN, Roaming).
     networkmanager = {
