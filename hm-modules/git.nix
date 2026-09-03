@@ -21,7 +21,7 @@
     signing = {
       key = "${mail}"; # your .gitconfig used the email as signingkey; gpg resolves it
       format = "openpgp";
-      signByDefault = true; # was [commit] gpgsign = true
+      #signByDefault = true; # was [commit] gpgsign = true
     };
 
     settings = {
