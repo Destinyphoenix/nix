@@ -31,6 +31,7 @@
   };
 }
 
+# generate gpg key
 # gpg --expert --full-generate-key
 # 11
 # s Certify only
@@ -54,11 +55,13 @@
 # 12 (encrypt)
 # ..
 # save
+# #################################### #
 # BACKUP:
 # gpg --export --armor 0x6BBCDF5E9A54FE5B > ~/pubkey.asc
 # gpg --export-secret-keys --armor 0x6BBCDF5E9A54FE5B > ~/master-secret.asc
 # cp ~/.gnupg/openpgp-revocs.d/0EF0568076B4BE5E09FCF7246BBCDF5E9A54FE5B.rev ~/revoke.asc
-# export to key
+# ########################################### #
+# add key to keycard
 # gpg --edit-key phoenix
 # key 1 (usage: S)
 # 1 (Signature key)
@@ -81,4 +84,9 @@
 # 5 (Ultimate)
 # gpg --export-ssh-key <KEYID> > ~/.ssh/yubikey.pub
 # mkdir -p ~/.config/Yubico
+#
+# ############################################## #
+# sudo and login with key
 # pamu2fcfg > ~/.config/Yubico/u2f_keys
+# Yubi Fido pin
+# touch yubi
