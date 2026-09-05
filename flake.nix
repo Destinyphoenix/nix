@@ -129,16 +129,16 @@
         };
 
         # Desktop – eigenes Theme, eigene Hardware, ein Modul mehr
-         desktop = mkHost {
-           hostname = "desktop";
-           username = "phoenix";
-           fullName = "phoenix";
-           mail = "phoenix.16iz7@passmail.net";
+        desktop = mkHost {
+          hostname = "desktop";
+          username = "phoenix";
+          fullName = "phoenix";
+          mail = "phoenix.l6iz7@passmail.net";
           useDefaultValues = true;
-        #   hardwareConfig = ./hosts/xyz/hardware-configuration.nix;
-        #   theme = import ./themes/xyz-theme.nix;
-        #   #extraModules = [ ./modules/ollama.nix ];
-         };
+          #   hardwareConfig = ./hosts/xyz/hardware-configuration.nix;
+          #   theme = import ./themes/xyz-theme.nix;
+          #   #extraModules = [ ./modules/ollama.nix ];
+        };
       };
     };
 }
