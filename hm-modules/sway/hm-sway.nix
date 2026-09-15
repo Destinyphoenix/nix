@@ -154,6 +154,10 @@ in
 
         "Mod4+l" = "exec  ${swaylock} -f";
         "Mod4+Shift+b" = "exec tofi-bluetooth"; # Bluetooth-Picker (tofi)
+        "Mod4+Shift+a" = "exec tofi-audio-output";
+        "Mod4+Shift+m" = "exec tofi-audio-input";
+        "Mod4+Shift+v" = "exec tofi-video-input";
+        "Mod4+Shift+c" = "exec tofi-calculator";
         #command = "${swaylock} -f";
       };
     };
@@ -208,6 +212,7 @@ in
     nautilus
     tofi
     swaysome
+    fastfetch
 
     # --- waylock (zum Testen als swaylock-Alternative) ---
     # waylock

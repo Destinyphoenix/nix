@@ -23,7 +23,7 @@
     # CachyOS/Arch-spezifisch und hat auf NixOS keine Entsprechung.
     shellAbbrs = {
       propa = "pass-cli";
-      pdis = "protonvpn disconnect";
+      pdi = "protonvpn disconnect";
       pco = "protonvpn connect --country DE --securecore";
       nire = "sudo nixos-rebuild switch --flake ~/nixos#${hostname}";
       update = "nix flake update";
@@ -35,6 +35,7 @@
       # (idiomatisch für Fish + HM statt manuellem export).
       fish_add_path ~/.local/bin
       fish_add_path ~/.config/emacs/bin
+      fastfetch
     '';
   };
 

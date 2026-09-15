@@ -12,6 +12,7 @@
 { pkgs, theme, ... }:
 
 {
+
   home.packages = [
     pkgs.tofi
     # Nerd-Font (theme.font) kommt bereits systemweit aus modules/sway.nix
@@ -145,6 +146,119 @@
     default-result-color  = ${theme.muted}
 
     # --- Auswahl (Ember-Balken, wie im Launcher) ------------------------
+    selection-color                    = ${theme.background}
+    selection-match-color              = ${theme.surface}
+    selection-background               = ${theme.primary}
+    selection-background-padding       = 6
+    selection-background-corner-radius = 4
+    result-spacing                     = 8
+  '';
+
+  xdg.configFile."tofi/audio".text = ''
+    font      = ${theme.font}
+    font-size = ${toString theme.fontSize}
+
+    ascii-input        = true
+    hint-font          = false
+    late-keyboard-init = true
+    hide-cursor        = true
+    num-results        = 8
+    prompt-text        = "󰕾 "
+
+    background-color = ${theme.background}CC
+    outline-width    = 2
+    outline-color    = ${theme.primary}
+    border-width     = 1
+    border-color     = ${theme.border}
+    corner-radius     = 10
+    width            = 620
+    height           = 440
+    padding-top      = 20
+    padding-bottom   = 20
+    padding-left     = 24
+    padding-right    = 24
+
+    text-color            = ${theme.muted}
+    prompt-color          = ${theme.primary}
+    input-color           = ${theme.foreground}
+    placeholder-color     = ${theme.muted}
+    default-result-color  = ${theme.muted}
+
+    selection-color                    = ${theme.background}
+    selection-match-color              = ${theme.surface}
+    selection-background               = ${theme.primary}
+    selection-background-padding       = 6
+    selection-background-corner-radius = 4
+    result-spacing                     = 8
+  '';
+  xdg.configFile."tofi/mic".text = ''
+    font      = ${theme.font}
+    font-size = ${toString theme.fontSize}
+
+    ascii-input        = true
+    hint-font          = false
+    late-keyboard-init = true
+    hide-cursor        = true
+    num-results        = 8
+    prompt-text        = "󰍬"
+
+    background-color = ${theme.background}CC
+    outline-width    = 2
+    outline-color    = ${theme.primary}
+    border-width     = 1
+    border-color     = ${theme.border}
+    corner-radius     = 10
+    width            = 620
+    height           = 440
+    padding-top      = 20
+    padding-bottom   = 20
+    padding-left     = 24
+    padding-right    = 24
+
+    text-color            = ${theme.muted}
+    prompt-color          = ${theme.primary}
+    input-color           = ${theme.foreground}
+    placeholder-color     = ${theme.muted}
+    default-result-color  = ${theme.muted}
+
+    selection-color                    = ${theme.background}
+    selection-match-color              = ${theme.surface}
+    selection-background               = ${theme.primary}
+    selection-background-padding       = 6
+    selection-background-corner-radius = 4
+    result-spacing                     = 8
+  '';
+
+  xdg.configFile."tofi/video".text = ''
+    font      = ${theme.font}
+    font-size = ${toString theme.fontSize}
+
+    ascii-input        = true
+    hint-font          = false
+    late-keyboard-init = true
+    hide-cursor        = true
+    num-results        = 8
+    prompt-text        = "󰄀"
+
+    background-color = ${theme.background}CC
+    outline-width    = 2
+    outline-color    = ${theme.primary}
+    border-width     = 1
+    border-color     = ${theme.border}
+    corner-radius     = 10
+    width            = 620
+    height           = 440
+    padding-top      = 20
+    padding-bottom   = 20
+    padding-left     = 24
+    padding-right    = 24
+
+    text-color            = ${theme.muted}
+    prompt-color          = ${theme.primary}
+    input-color           = ${theme.foreground}
+    placeholder-color     = ${theme.muted}
+    default-result-color  = ${theme.muted}
+
     selection-color                    = ${theme.background}
     selection-match-color              = ${theme.surface}
     selection-background               = ${theme.primary}

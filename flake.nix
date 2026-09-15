@@ -45,6 +45,8 @@
         ./hm-modules/sway/hm-sway.nix
         ./hm-modules/terminal.nix
         ./hm-modules/tofi/bluetooth.nix
+        ./hm-modules/tofi/audio.nix
+        ./hm-modules/tofi/calculator.nix
       ];
 
       # Baut eine komplette NixOS-Config für einen Host.
