@@ -158,6 +158,8 @@ in
         "Mod4+Shift+m" = "exec tofi-audio-input";
         "Mod4+Shift+v" = "exec tofi-video-input";
         "Mod4+Shift+c" = "exec tofi-calculator";
+        "Mod4+Shift+q" = "exec tofi-websearch";
+
         #command = "${swaylock} -f";
       };
     };

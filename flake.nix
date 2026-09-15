@@ -47,6 +47,7 @@
         ./hm-modules/tofi/bluetooth.nix
         ./hm-modules/tofi/audio.nix
         ./hm-modules/tofi/calculator.nix
+        ./hm-modules/tofi/websearch.nix
       ];
 
       # Baut eine komplette NixOS-Config für einen Host.

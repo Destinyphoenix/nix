@@ -15,6 +15,7 @@ let
     set -euo pipefail
     tofi="${pkgs.tofi}/bin/tofi"
     qalc="${pkgs.libqalculate}/bin/qalc"
+    wlcopy="${pkgs.wl-clipboard}/bin/wl-copy"
 
     result=""
     while true; do
@@ -25,9 +26,24 @@ let
         --config "$HOME/.config/tofi/calculator" \
         --require-match=false \
         --prompt-text "$prompt")
-      [ -z "$input" ] && exit 0
 
-      if ! result=$("$qalc" -t "$input" 2>/dev/null); then
+      if [ -z "$input" ]; then
+        # Fenster geschlossen (Esc/leere Eingabe) -> letztes Ergebnis
+        # in die Zwischenablage kopieren, falls vorhanden.
+        [ -n "$result" ] && printf '%s' "$result" | "$wlcopy"
+        exit 0
+      fi
+
+      # Beginnt die Eingabe nicht mit einer Ziffer (z.B. "+2", "*3"),
+      # wird sie an das letzte Ergebnis angehängt statt es zu ersetzen:
+      #   2+2 -> 4      +2 -> 4+2 -> 6
+      if [[ "$input" =~ ^[0-9] ]]; then
+        expr="$input"
+      else
+        expr="$result$input"
+      fi
+
+      if ! result=$("$qalc" -t "$expr" 2>/dev/null); then
         result="Fehler"
       fi
     done
@@ -37,6 +53,7 @@ in
   home.packages = [
     tofi-calculator
     pkgs.libqalculate
+    pkgs.wl-clipboard
   ];
 
   # Eigenes Theme, analog zu tofi/audio, tofi/mic etc. in tofi.nix — hier
