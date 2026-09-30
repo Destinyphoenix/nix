@@ -8,6 +8,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Ponytail-Plugin für Claude Code – kein Flake, nur Quellbaum.
+    # Update per `nix flake update ponytail`.
+    ponytail = {
+      url = "github:DietrichGebert/ponytail";
+      flake = false;
+    };
   };
 
   outputs =
@@ -28,10 +34,12 @@
         ./modules/network.nix
         #./modules/zsa.nix
         ./modules/sway.nix
+        ./modules/theming.nix
+        ./modules/steam-user.nix
         ./modules/terminal.nix
         ./modules/cleanup.nix
         ./modules/brave-policies.nix
-        #./specialisations/gaming.nix
+        ./modules/extra-disks.nix
         #./modules/docker.nix
         ./modules/bluetooth.nix
       ];
@@ -43,11 +51,14 @@
         ./hm-modules/zed.nix
         ./hm-modules/brave.nix
         ./hm-modules/sway/hm-sway.nix
+        ./hm-modules/theming.nix
         ./hm-modules/terminal.nix
         ./hm-modules/tofi/bluetooth.nix
         ./hm-modules/tofi/audio.nix
         ./hm-modules/tofi/calculator.nix
         ./hm-modules/tofi/websearch.nix
+
+        ./hm-modules/claude-code.nix
       ];
 
       # Baut eine komplette NixOS-Config für einen Host.
@@ -75,7 +86,9 @@
           hostNixModules = import (hostDir + /nix-modules.nix);
           hostHmModules = import (hostDir + /hm-modules.nix);
           hardwareConfig = hostDir + /hardware-configuration.nix;
-
+          # extraDisks: immer gemountet; extraDisksGaming: nur in der
+          # gaming-Specialisation (siehe hosts/<hostname>/disks.nix).
+          hostDisks = import (hostDir + /disks.nix);
           modules = (if useDefaultValues then defaultModules else [ ]) ++ hostNixModules;
 
           homeModules = (if useDefaultValues then defaultHomeModules else [ ]) ++ hostHmModules;
@@ -90,6 +103,8 @@
               hostname
               inputs
               ;
+            extraDisks = hostDisks.extraDisks or [ ];
+            extraDisksGaming = hostDisks.extraDisksGaming or [ ];
           };
           modules =
             modules

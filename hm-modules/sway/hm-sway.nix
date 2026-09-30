@@ -160,6 +160,7 @@ in
         "Mod4+Shift+c" = "exec tofi-calculator";
         "Mod4+Shift+q" = "exec tofi-websearch";
 
+        "Mod4+a" = "exec kitty --class claude  --directory ~/nixos --title claude -e claude";
         #command = "${swaylock} -f";
       };
     };
@@ -197,6 +198,11 @@ in
         for_window [app_id="^yazi$"] resize set 900 640
         for_window [app_id="^yazi$"] move position center
         for_window [app_id="^yazi$"] border pixel 2
+
+      # claude
+        for_window [app_id="^claude$"] floating enable
+              for_window [app_id="^claude$"] resize set 1100 720
+              for_window [app_id="^claude$"] move position center
     '';
   };
   # Werkzeuge, die die Bindings/Autostarts/Lock aufrufen.

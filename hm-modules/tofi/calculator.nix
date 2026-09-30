@@ -37,7 +37,7 @@ let
       # Beginnt die Eingabe nicht mit einer Ziffer (z.B. "+2", "*3"),
       # wird sie an das letzte Ergebnis angehängt statt es zu ersetzen:
       #   2+2 -> 4      +2 -> 4+2 -> 6
-      if [[ "$input" =~ ^[0-9] ]]; then
+      if [[ "$input" =~ ^[0-9\(] ]]; then
         expr="$input"
       else
         expr="$result$input"

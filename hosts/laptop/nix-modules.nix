@@ -4,7 +4,7 @@
   # Beispiel: zusätzliches Modul nur für diesen Host
   # ../../modules/ollama.nix
 
-  ../../specialisations/gaming.nix
+  ./gaming.nix
   ../../modules/zsa.nix
   ../../modules/docker.nix
 

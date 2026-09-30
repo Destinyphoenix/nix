@@ -58,6 +58,7 @@
     description = fullName;
     extraGroups = [
       "wheel"
+      "gaming" # Lese-/Schreibzugriff auf die extraDisksGaming-Spielebibliotheken
     ];
     packages = with pkgs; [
       #  thunderbird

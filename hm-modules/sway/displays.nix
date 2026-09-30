@@ -85,6 +85,7 @@
                 criteria = "DP-1";
                 status = "enable";
                 position = "1920,0";
+                scale = 2.0;
               }
               {
                 criteria = "DP-3";
