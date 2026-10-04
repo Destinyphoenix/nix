@@ -23,4 +23,12 @@
   # {
   #   terminal.enable = false;
   # }
+  (
+    { pkgs, ... }:
+    {
+      home.packages = with pkgs; [
+        traceroute
+      ];
+    }
+  )
 ]

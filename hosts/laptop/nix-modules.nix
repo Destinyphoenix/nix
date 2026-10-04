@@ -1,12 +1,13 @@
 # hosts/<hostname>/nix-modules.nix
 
 [
-  # Beispiel: zusätzliches Modul nur für diesen Host
-  # ../../modules/ollama.nix
 
   ./gaming.nix
   ../../modules/zsa.nix
   ../../modules/docker.nix
+  ../../modules/protonvpn.nix
+
+  ../../modules/eduroam/default.nix
 
   # Inline-Overrides / enable-Regeln nur für diesen Host
   # {
