@@ -160,7 +160,7 @@ in
         "Mod4+Shift+c" = "exec tofi-calculator";
         "Mod4+Shift+q" = "exec tofi-websearch";
 
-        "Mod4+a" = "exec kitty --class claude  --directory ~/nixos --title claude -e claude";
+        "Mod4+a" = "exec kitty --class claude  --directory ~/Documents/Info --title claude -e claude";
         #command = "${swaylock} -f";
       };
     };

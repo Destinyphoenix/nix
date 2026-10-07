@@ -13,21 +13,35 @@ let
     tofi=${pkgs.tofi}/bin/tofi
     notify=${pkgs.libnotify}/bin/notify-send
 
-    "$bt" show | grep -q "Powered: yes" || "$bt" power on
+    "$bt" show | grep -q "Powered: yes" || "$bt" power on >/dev/null
 
     # "devices" (nicht "devices Paired") zeigt auch frisch gescannte,
     # noch nicht gepairte Geräte an.
-    mapfile -t devices < <("$bt" devices | cut -d' ' -f2-)
+    # Seit bluez 5.87 färbt bluetoothctl auch ohne TTY (ANSI-Codes) und
+    # mischt während eines laufenden Scans [CHG]/[NEW]/[DEL]-Events in die
+    # Ausgabe. Daher: Farbcodes entfernen und nur echte "Device <MAC> <Name>"-
+    # Zeilen übernehmen.
+    mapfile -t devices < <(
+      "$bt" devices \
+        | sed -E 's/\x1b\[[0-9;]*m//g' \
+        | grep -E '^Device ([0-9A-F]{2}:){5}[0-9A-F]{2} ' \
+        | cut -d' ' -f2- \
+        | sort -u
+    )
 
     menu=""
     declare -A mac_of
     for d in "''${devices[@]}"; do
       mac="''${d%% *}"
       name="''${d#* }"
-      info="$("$bt" info "$mac")"
-      if grep -q "Connected: yes" <<< "$info"; then
+      # Namenlose Geräte (Name == MAC mit Bindestrichen, meist zufällige
+      # BLE-Adressen) überspringen – sonst hunderte Einträge und je ein
+      # langsamer "info"-Aufruf.
+      [ "$name" = "''${mac//:/-}" ] && continue
+      info="$("$bt" info "$mac" 2>/dev/null)" || continue
+      if grep -qE '^\s+Connected: yes' <<< "$info"; then
         line="✔ $name"
-      elif grep -q "Paired: yes" <<< "$info"; then
+      elif grep -qE '^\s+Paired: yes' <<< "$info"; then
         line="  $name"
       else
         line="+ $name"
@@ -37,7 +51,7 @@ let
     done
     menu+="⟳ Scan (10s)"
 
-    choice=$(printf '%s' "$menu" | "$tofi" --config "$HOME/.config/tofi/network" --prompt-text "  ")
+    choice=$(printf '%s' "$menu" | "$tofi" --config "$HOME/.config/tofi/bluetooth")
     [ -z "$choice" ] && exit 0
 
     if [ "$choice" = "⟳ Scan (10s)" ]; then
