@@ -53,6 +53,7 @@
         ./hm-modules/sway/hm-sway.nix
         ./hm-modules/theming.nix
         ./hm-modules/terminal.nix
+        ./hm-modules/tofi/network.nix
         ./hm-modules/tofi/bluetooth.nix
         ./hm-modules/tofi/audio.nix
         ./hm-modules/tofi/calculator.nix

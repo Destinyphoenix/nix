@@ -56,8 +56,7 @@ in
     pkgs.wl-clipboard
   ];
 
-  # Eigenes Theme, analog zu tofi/audio, tofi/mic etc. in tofi.nix — hier
-  # separat gehalten, kann bei Bedarf dorthin verschoben werden.
+  # Eigenes Theme (Muster für alle tofi-Screens, siehe Übersicht in tofi.nix).
   xdg.configFile."tofi/calculator".text = ''
     # --- Font -----------------------------------------------------------
     font      = ${theme.font}
