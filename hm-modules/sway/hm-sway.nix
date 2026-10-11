@@ -50,6 +50,9 @@ in
       input = {
         "type:keyboard" = {
           xkb_layout = "de";
+          # Ohne Tottasten: "^" wird direkt getippt (nötig für tofi-calculator,
+          # tofi kann keine Dead-Key-Sequenzen zusammensetzen)
+          xkb_variant = "nodeadkeys";
           #xkb_options = "caps:swapescape";
         };
         "type:touchpad" = {

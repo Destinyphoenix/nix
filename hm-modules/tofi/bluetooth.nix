@@ -1,7 +1,10 @@
-# Bluetooth-Picker — kompakter tofi-dmenu-Screen für Connect/Disconnect/Pair/Scan.
+# Bluetooth-Picker — kompakter tofi-dmenu-Screen für Connect/Disconnect/Pair/Scan/Aus.
 #
 # Nutzt bluetoothctl direkt statt rofi-bluetooth/bluetuith.
 # ✔ = verbunden · (Leerzeichen) = gepaart, nicht verbunden · + = neu gefunden, ungepaart
+#
+# Das Funkmodul ist nach dem Boot aus (modules/bluetooth.nix): das Skript
+# schaltet es ein, „⏻ Bluetooth aus“ schaltet es wieder ab.
 #
 # Aufruf: tofi-bluetooth  (gebunden auf Mod4+Shift+b in hm-sway.nix)
 { pkgs, theme, ... }:
@@ -49,7 +52,8 @@ let
       mac_of["$line"]="$mac"
       menu+="$line"$'\n'
     done
-    menu+="⟳ Scan (10s)"
+    menu+="⟳ Scan (10s)"$'\n'
+    menu+="⏻ Bluetooth aus"
 
     choice=$(printf '%s' "$menu" | "$tofi" --config "$HOME/.config/tofi/bluetooth")
     [ -z "$choice" ] && exit 0
@@ -64,10 +68,21 @@ let
       #exit 0
     fi
 
+    if [ "$choice" = "⏻ Bluetooth aus" ]; then
+      "$bt" power off >/dev/null
+      exit 0
+    fi
+
     mac="''${mac_of[$choice]}"
     case "$choice" in
       ✔*) "$bt" disconnect "$mac" ;;
-      +*) "$bt" pair "$mac" && "$bt" trust "$mac" && "$bt" connect "$mac" ;;
+      +*)
+        # Pairable nur für die Dauer des Pairings; der trap greift auch,
+        # wenn "pair" unter set -e fehlschlägt.
+        "$bt" pairable on >/dev/null
+        trap '"$bt" pairable off >/dev/null 2>&1' EXIT
+        "$bt" pair "$mac" && "$bt" trust "$mac" && "$bt" connect "$mac"
+        ;;
       *)  "$bt" connect "$mac" ;;
     esac
   '';

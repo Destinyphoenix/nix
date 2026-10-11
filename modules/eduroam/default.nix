@@ -43,7 +43,7 @@ let
   '';
 
   # HKA-Kennung (Format: kennung@h-ka.de) – anpassen!
-  identity = "abcd1234@h-ka.de";
+  identity = "abc@h-ka.de";
 
   # Werte aus dem CAT-Installer (Config.*)
   anonymousIdentity = "anonymous@h-ka.de";
@@ -65,10 +65,10 @@ in
       id = "eduroam";
       type = "wifi";
       autoconnect = true;
-      # Private Verbindung wie beim CAT-Installer: nur dieser Nutzer
-      # darf sie aktivieren; passt zum agent-owned Passwort, das
-      # ohnehin erst in der Nutzersitzung verfügbar ist.
-      permissions = "user:${username};";
+      # Bewusst KEINE private Verbindung (permissions = "user:…;"):
+      # NM lehnt ca-path bei privaten Verbindungen ab ("ca-path is not
+      # supported for private connections"). Schutz des Passworts
+      # bleibt trotzdem: agent-owned → nur in der Nutzersitzung verfügbar.
     };
 
     wifi = {
