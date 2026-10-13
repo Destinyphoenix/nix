@@ -27,9 +27,8 @@
   # LaTeX: Zed + texlab + Zathura
   ../../hm-modules/LaTex/latex.nix
 
-  # Doom Emacs; daemon.nix optional (emacsclient, Start mit der Session)
-  ../../hm-modules/doom/doom.nix
-  ../../hm-modules/doom/daemon.nix
+  # Präsentationen mit Presenter-Ansicht (pdfpc + Sway-Regeln)
+  ../../hm-modules/pdfpc.nix
 
   (
     { pkgs, ... }:
