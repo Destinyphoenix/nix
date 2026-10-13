@@ -22,22 +22,11 @@ let
 in
 {
   # --- TeX Live -------------------------------------------------------------
-  # scheme-medium deckt den Alltag ab (amsmath, tikz, hyperref, …); fehlende
-  # Pakete hier ergänzen statt auf scheme-full zu wechseln.
+  # scheme-full enthält alle CTAN-Pakete, also auch latexmk, biber, chktex,
+  # collection-langgerman usw. – einzelne Pakete müssen nicht mehr ergänzt werden.
   programs.texlive = {
     enable = true;
-    extraPackages = tpkgs: {
-      inherit (tpkgs)
-        scheme-medium
-        latexmk # Build-Treiber für texlab
-        collection-langgerman # babel-german, deutsche Silbentrennung
-        biblatex
-        biber # Backend für biblatex
-        chktex # Linter, von texlab genutzt
-        csquotes # \enquote, von biblatex/babel-german empfohlen
-        appendix # Anhang-Umgebungen (appendices, subappendices)
-        ;
-    };
+    extraPackages = tpkgs: { inherit (tpkgs) scheme-full; };
   };
 
   # --- Zathura (PDF-Viewer) ---------------------------------------------------

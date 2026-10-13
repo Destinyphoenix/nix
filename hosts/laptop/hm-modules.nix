@@ -23,6 +23,14 @@
   # {
   #   terminal.enable = false;
   # }
+
+  # LaTeX: Zed + texlab + Zathura
+  ../../hm-modules/LaTex/latex.nix
+
+  # Doom Emacs; daemon.nix optional (emacsclient, Start mit der Session)
+  ../../hm-modules/doom/doom.nix
+  ../../hm-modules/doom/daemon.nix
+
   (
     { pkgs, ... }:
     {

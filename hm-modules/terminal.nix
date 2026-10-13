@@ -34,7 +34,6 @@
       # export PATH=... aus der alten config.fish, per fish_add_path
       # (idiomatisch für Fish + HM statt manuellem export).
       fish_add_path ~/.local/bin
-      fish_add_path ~/.config/emacs/bin
     '';
   };
 

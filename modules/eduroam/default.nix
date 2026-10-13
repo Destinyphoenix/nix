@@ -43,7 +43,7 @@ let
   '';
 
   # HKA-Kennung (Format: kennung@h-ka.de) – anpassen!
-  identity = "abc@h-ka.de";
+  identity = "keni1023@h-ka.de";
 
   # Werte aus dem CAT-Installer (Config.*)
   anonymousIdentity = "anonymous@h-ka.de";
