@@ -24,6 +24,7 @@
   #   terminal.enable = false;
   # }
 
+  ../../hm-modules/sway/displays.nix
   # LaTeX: Zed + texlab + Zathura
   ../../hm-modules/LaTex/latex.nix
 
@@ -35,8 +36,11 @@
     {
       home.packages = with pkgs; [
         traceroute
+        inetutils # telnet-Client (nur Client, kein telnetd)
         ncdu
         libreoffice
+        vscode-fhs
+        super-productivity
       ];
     }
   )

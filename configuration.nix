@@ -82,11 +82,11 @@
 
   # Automatik updates – Flake-Ziel jetzt hostabhängig (${hostname} statt
   # fest "phoenix"), damit jeder Host sich selbst korrekt aktualisiert.
-  system.autoUpgrade = {
-    enable = true;
-    dates = "weekly";
-    flake = "github:Destinyphoenix/nix#${hostname}";
-  };
+  # system.autoUpgrade = {
+  #   enable = true;
+  #   dates = "weekly";
+  #   flake = "github:Destinyphoenix/nix#${hostname}";
+  # };
 
   programs.sniffnet.enable = true;
   # List packages installed in system profile. To search, run:
