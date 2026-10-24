@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  theme,
   ...
 }:
 # Quick reference for sway's modifier names:
@@ -62,19 +61,7 @@ in
         };
       };
 
-      # Keine Standard-Swaybar – wir starten waybar über startup.
-      #bars = [ ];
-      # im wayland.windowManager.sway.config-Block:
-      bars = [
-        {
-          position = "top";
-          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-default.toml";
-          fonts = {
-            names = [ theme.font ];
-            size = theme.fontSize * 1.0;
-          };
-        }
-      ];
+      # Bar (swaybar + i3status-rust) liegt in ./swaybar.nix.
 
       # exec-once aus der hyprland.conf.
       # hypridle entfällt -> läuft jetzt als services.swayidle (unten).
