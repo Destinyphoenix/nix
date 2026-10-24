@@ -18,12 +18,14 @@
 let
   swaylock = lib.getExe config.programs.swaylock.package;
   swaymsg = "${pkgs.sway}/bin/swaymsg";
+  makoctl = lib.getExe' config.services.mako.package "makoctl";
 in
 {
   imports = [
     ./swayidle.nix
     ./swaylock.nix
     ./swaybar.nix
+    ./mako.nix
     ./wallpaper.nix
     ./../yazi.nix
   ];
@@ -162,6 +164,12 @@ in
         "Mod4+Shift+v" = "exec tofi-video-input";
         "Mod4+Shift+c" = "exec tofi-calculator";
         "Mod4+Shift+q" = "exec tofi-websearch";
+
+        # --- Benachrichtigungen (mako) ---
+        "Mod4+x" = "exec ${makoctl} dismiss"; # oberste schließen
+        "Mod4+Shift+x" = "exec ${makoctl} dismiss --all"; # alle schließen
+        "Mod4+Ctrl+x" = "exec ${makoctl} restore"; # letzte wiederherstellen
+        "Mod4+Shift+d" = "exec ${makoctl} mode -t do-not-disturb"; # Nicht stören an/aus
 
         "Mod4+a" = "exec kitty --class claude  --directory ~/Documents/Info --title claude -e claude";
         #command = "${swaylock} -f";
