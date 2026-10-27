@@ -16,6 +16,7 @@
 # ermitteln und hier eintragen, oder einfach nwg-displays einmal
 # durchlaufen lassen und das generierte Profil übernehmen.
 {
+  config,
   pkgs,
   hostname,
   ...
@@ -24,6 +25,17 @@
 {
   home.packages = [
     pkgs.nwg-displays
+  ];
+
+  # Ein `swaymsg reload` (macht Home Manager automatisch, sobald sich die
+  # sway-Config beim Switch ändert) setzt alle Outputs auf die sway-Defaults
+  # zurück. kanshi merkt davon nichts, weil sich die angeschlossenen Outputs
+  # nicht ändern – daher das Profil nach jedem (Re-)Load erneut anwenden.
+  wayland.windowManager.sway.config.startup = [
+    {
+      command = "${config.services.kanshi.package}/bin/kanshictl reload";
+      always = true;
+    }
   ];
 
   services.kanshi = {
