@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  theme,
   ...
 }:
 # Quick reference for sway's modifier names:
@@ -18,12 +17,14 @@
 let
   swaylock = lib.getExe config.programs.swaylock.package;
   swaymsg = "${pkgs.sway}/bin/swaymsg";
+  makoctl = lib.getExe' config.services.mako.package "makoctl";
 in
 {
   imports = [
     ./swayidle.nix
     ./swaylock.nix
     ./swaybar.nix
+    ./mako.nix
     ./wallpaper.nix
     ./../yazi.nix
   ];
@@ -60,19 +61,7 @@ in
         };
       };
 
-      # Keine Standard-Swaybar – wir starten waybar über startup.
-      #bars = [ ];
-      # im wayland.windowManager.sway.config-Block:
-      bars = [
-        {
-          position = "top";
-          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-default.toml";
-          fonts = {
-            names = [ theme.font ];
-            size = theme.fontSize * 1.0;
-          };
-        }
-      ];
+      # Bar (swaybar + i3status-rust) liegt in ./swaybar.nix.
 
       # exec-once aus der hyprland.conf.
       # hypridle entfällt -> läuft jetzt als services.swayidle (unten).
@@ -162,6 +151,12 @@ in
         "Mod4+Shift+v" = "exec tofi-video-input";
         "Mod4+Shift+c" = "exec tofi-calculator";
         "Mod4+Shift+q" = "exec tofi-websearch";
+
+        # --- Benachrichtigungen (mako) ---
+        "Mod4+x" = "exec ${makoctl} dismiss"; # oberste schließen
+        "Mod4+Shift+x" = "exec ${makoctl} dismiss --all"; # alle schließen
+        "Mod4+Ctrl+x" = "exec ${makoctl} restore"; # letzte wiederherstellen
+        "Mod4+Shift+d" = "exec ${makoctl} mode -t do-not-disturb"; # Nicht stören an/aus
 
         "Mod4+a" = "exec kitty --class claude  --directory ~/Documents/Info --title claude -e claude";
         #command = "${swaylock} -f";
