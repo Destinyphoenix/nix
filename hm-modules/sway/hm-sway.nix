@@ -151,6 +151,7 @@ in
         "Mod4+Shift+v" = "exec tofi-video-input";
         "Mod4+Shift+c" = "exec tofi-calculator";
         "Mod4+Shift+q" = "exec tofi-websearch";
+        "Mod4+t" = "exec tofi-task"; # neuer Super-Productivity-Task
 
         # --- Benachrichtigungen (mako) ---
         "Mod4+x" = "exec ${makoctl} dismiss"; # oberste schließen

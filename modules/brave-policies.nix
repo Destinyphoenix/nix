@@ -167,6 +167,11 @@
             name = "mfa";
             url = "https://mfa.h-ka.de/";
           }
+          {
+            name = "Noten2";
+            url = " https://studx.h-ka.de/";
+          }
+
         ];
       }
       {
