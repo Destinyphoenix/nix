@@ -32,6 +32,7 @@
     extraPackages = with pkgs; [
       nixd # Nix LSP. Your reference flake uses `nil` instead — swap if preferred.
       nixfmt # formatter for Nix
+      superhtml # HTML-LSP mit strenger Validierung, wird von der superhtml-Extension per PATH gefunden
     ];
 
     # Auto-installed on startup. Names are repo names from
@@ -42,6 +43,8 @@
       "fish"
       "color-highlight"
       "color-lsp"
+      "html"
+      "superhtml"
     ];
 
     userSettings = {
@@ -59,7 +62,8 @@
         metrics = false;
         diagnostics = false;
       };
-      edit_predictions.provider = "none"; # disables edit prediction (AI autocomplete) entirely
+      # Copilot-Login einmalig in Zed: Statusleisten-Icon -> "Sign in to Copilot"
+      edit_predictions.provider = "copilot";
       # edit_predictions = {
       #   provider = "ollama";
       #   ollama = {
@@ -78,6 +82,12 @@
       # --- Nix language server ----------------------------------------------
       languages.Nix.language_servers = [ "nixd" ];
       lsp.nixd.settings.formatting.command = [ "nixfmt" ];
+
+      # --- HTML: superhtml zusätzlich zum Standard-LSP ----------------------
+      languages.HTML.language_servers = [
+        "vscode-html-language-server"
+        "superhtml"
+      ];
 
       project_panel = {
         dock = "right";

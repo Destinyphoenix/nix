@@ -31,6 +31,9 @@
   # Präsentationen mit Presenter-Ansicht (pdfpc + Sway-Regeln)
   ../../hm-modules/pdfpc.nix
 
+  # Neuer Super-Productivity-Task per tofi (Super+T)
+  ../../hm-modules/tofi/task.nix
+
   (
     { pkgs, ... }:
     {
