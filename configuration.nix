@@ -96,7 +96,6 @@
     git
     zed-editor
     #brave
-    obsidian
     wget
     btop
   ];
