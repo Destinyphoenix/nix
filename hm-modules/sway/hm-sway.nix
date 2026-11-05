@@ -25,6 +25,7 @@ in
     ./swaylock.nix
     ./swaybar.nix
     ./mako.nix
+    ./satty.nix
     ./wallpaper.nix
     ./../yazi.nix
   ];
@@ -191,6 +192,9 @@ in
 
       # Screenshot: Region -> Zwischenablage (ersetzt hyprshot -m region)
       bindsym Print exec grim -g "$(slurp)" - | wl-copy
+      # Screenshot: Region -> Zeichnen in satty
+      bindsym Shift+Print exec grim -g "$(slurp)" - | satty --filename -
+      for_window [app_id="^com.gabm.satty$"] floating enable
 
       # yazi
       for_window [app_id="^yazi$"] floating enable
