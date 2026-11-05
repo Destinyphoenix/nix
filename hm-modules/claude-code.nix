@@ -110,7 +110,6 @@
       - Nix-Optionen und -Pakete über das `nixos`-MCP nachsehen, nicht raten
       - Bei nicht-trivialen Entscheidungen erst Varianten mit Vor-/Nachteilen,
         dann implementieren
-      - Nach Änderungen die vollständige Datei ausgeben, nicht nur den Diff
     '';
   };
 

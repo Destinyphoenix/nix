@@ -37,23 +37,23 @@ in
       synctex-editor-command = editorCommand;
       selection-clipboard = "clipboard"; # markierter Text landet in Strg+V
 
-      font = "${theme.font} ${toString theme.fontSize}";
-      default-bg = theme.background;
-      default-fg = theme.foreground;
-      statusbar-bg = theme.surface;
-      statusbar-fg = theme.foreground;
-      inputbar-bg = theme.surface;
-      inputbar-fg = theme.foreground;
-      notification-error-bg = theme.error;
-      notification-error-fg = theme.background;
-      notification-warning-bg = theme.warning;
-      notification-warning-fg = theme.background;
-      highlight-color = theme.primary;
-      highlight-active-color = theme.accent;
-
-      # Dunkles PDF per Strg+r (recolor), standardmäßig aus.
-      recolor-darkcolor = theme.foreground;
-      recolor-lightcolor = theme.background;
+      #       font = "${theme.font} ${toString theme.fontSize}";
+      #       default-bg = theme.background;
+      #       default-fg = theme.foreground;
+      #       statusbar-bg = theme.surface;
+      #       statusbar-fg = theme.foreground;
+      #       inputbar-bg = theme.surface;
+      #       inputbar-fg = theme.foreground;
+      #       notification-error-bg = theme.error;
+      #       notification-error-fg = theme.background;
+      #       notification-warning-bg = theme.warning;
+      #       notification-warning-fg = theme.background;
+      #       highlight-color = theme.primary;
+      #       highlight-active-color = theme.accent;
+      #
+      #       # Dunkles PDF per Strg+r (recolor), standardmäßig aus.
+      #       recolor-darkcolor = theme.foreground;
+      #       recolor-lightcolor = theme.background;
     };
   };
 

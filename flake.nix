@@ -50,6 +50,7 @@
         ./hm-modules/git.nix
         ./hm-modules/zed.nix
         ./hm-modules/brave.nix
+        ./hm-modules/obsidian.nix
         ./hm-modules/sway/hm-sway.nix
         ./hm-modules/theming.nix
         ./hm-modules/terminal.nix
