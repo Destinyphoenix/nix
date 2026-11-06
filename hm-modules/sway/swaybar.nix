@@ -51,6 +51,20 @@ let
       separator_bg = "auto";
     };
   };
+
+  # i3status-rust kann nicht blinken: Der custom-Block wechselt daher jede
+  # Sekunde den State (Critical = rot, Idle = grau). Nur Shell-Builtins, damit
+  # nicht bei jedem Aufruf zusätzliche Prozesse starten.
+  batteryBlink = pkgs.writeShellScript "battery-blink" ''
+    bat=/sys/class/power_supply/BAT0
+    { read -r cap < "$bat/capacity" && read -r status < "$bat/status"; } 2>/dev/null
+    if [ "$status" = Discharging ] && [ "$cap" -le 10 ]; then
+      if (( EPOCHSECONDS % 2 )); then state=Critical; else state=Idle; fi
+      echo "{\"text\":\"󰂃\",\"state\":\"$state\"}"
+    else
+      echo '{"text":""}'
+    fi
+  '';
 in
 {
 
@@ -109,6 +123,14 @@ in
         {
           block = "sound";
           format = " $icon ";
+        }
+        # Blinkt nur beim Entladen unter 10 %, sonst unsichtbar.
+        {
+          block = "custom";
+          command = "${batteryBlink}";
+          json = true;
+          hide_when_empty = true;
+          interval = 1;
         }
         {
           block = "battery";

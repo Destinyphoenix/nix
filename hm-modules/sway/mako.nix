@@ -39,6 +39,11 @@
       "mode=do-not-disturb" = {
         invisible = 1;
       };
+
+      # Akku-Warnungen bleiben auch im Nicht-stören-Modus sichtbar.
+      "mode=do-not-disturb app-name=batsignal" = {
+        invisible = 0;
+      };
     };
   };
 }
