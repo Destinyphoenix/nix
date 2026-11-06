@@ -37,6 +37,9 @@
   (
     { pkgs, ... }:
     {
+      # Akku-Benachrichtigungen über mako; nur hier, da batsignal ohne Akku abbricht.
+      services.batsignal.enable = true;
+
       home.packages = with pkgs; [
         traceroute
         inetutils # telnet-Client (nur Client, kein telnetd)
