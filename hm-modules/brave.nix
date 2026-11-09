@@ -28,6 +28,8 @@
       "--ozone-platform-hint=auto"
       "--enable-wayland-ime"
       "--force-dark-mode"
+      # Unter Sway fiele Brave sonst auf "basic" mit festem Schlüssel zurück.
+      "--password-store=gnome-libsecret"
     ];
   };
 }

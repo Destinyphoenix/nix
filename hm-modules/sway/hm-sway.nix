@@ -89,7 +89,7 @@ in
         "Mod4+Shift+e" = "exec kitty --class yazi --title yazi -e yazi"; # terminal Dateimanager, floatend
         "Mod4+v" = "floating toggle"; # togglefloating
         "Mod4+r" = "exec tofi-drun --drun-launch=true"; # $menu
-        "Mod4+b" = "exec brave --password-store=basic";
+        "Mod4+b" = "exec brave";
         "Mod4+f" = "fullscreen"; # fullscreen, 0
         "Mod4+n" = "exec networkmanager_dmenu"; # WLAN-Picker (tofi)
         # Mod4+p (pseudo, dwindle) hat kein Sway-Äquivalent -> entfällt

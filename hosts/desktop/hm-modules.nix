@@ -5,7 +5,7 @@
 
   ../../hm-modules/LaTex/latex.nix
   ../../hm-modules/sway/protonvpn.nix
-  #../../hm-modules/pass.nix
+  #../../hm-modules/security/pass.nix
   # {
   #   terminal.enable = false;
   # }

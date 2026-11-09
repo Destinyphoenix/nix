@@ -1,4 +1,4 @@
-# modules/yubikey.nix
+# modules/security/yubikey.nix
 #
 # YubiKey 5 Systemintegration: Smartcard-Zugriff (GPG/SSH), udev-Regeln,
 # PAM-U2F für Login/Sway-Lock/sudo, sowie CLI/GUI-Verwaltungstools.

@@ -34,6 +34,8 @@
   # Neuer Super-Productivity-Task per tofi (Super+T)
   ../../hm-modules/tofi/task.nix
 
+  ../../hm-modules/security/keepassxc.nix
+
   (
     { pkgs, ... }:
     {

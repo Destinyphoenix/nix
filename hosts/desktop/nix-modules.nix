@@ -1,7 +1,8 @@
 [
   # ../../modules/ollama.nix
-  ../../modules/yubikey.nix
-  ../../modules/protonvpn.nix
+  ../../modules/security/yubikey.nix
+  ../../modules/security/protonvpn.nix
+  ../../modules/security/gnome-keyring.nix
   ../../modules/docker.nix
   # ./gaming.nix
   # {

@@ -5,7 +5,8 @@
   ./gaming.nix
   ../../modules/zsa.nix
   ../../modules/docker.nix
-  ../../modules/protonvpn.nix
+  ../../modules/security/protonvpn.nix
+  ../../modules/security/yubikey.nix
 
   ../../modules/eduroam/default.nix
 

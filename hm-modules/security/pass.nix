@@ -1,4 +1,4 @@
-# hm-modules/pass.nix
+# hm-modules/security/pass.nix
 #
 # GPG-gestützter Passwortspeicher (pass) + Secret-Service-Brücke
 # (pass-secret-service). Ersetzt gnome-keyring als Provider für
