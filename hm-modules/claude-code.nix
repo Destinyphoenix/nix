@@ -9,7 +9,7 @@
 #   mcp-nixos  -> MCP-Server für Paket-/Options-Suche (nixpkgs, Home Manager,
 #                 Noogle, Wiki). Kommt aus nixpkgs, also kein uvx/npx/Docker
 #                 zur Laufzeit. Nutzt zur Abfrage das Netz (search.nixos.org).
-#   ponytail   -> Plugin (Skills + /ponytail-Commands + Always-on-Ruleset).
+#   ponytail   -> Plugin über lokalen Marketplace (Skills, Commands, Hooks, Band).
 #                 Quelle ist der Flake-Input `ponytail` (flake = false), damit
 #                 die Version in flake.lock gepinnt ist und kein Hash von Hand
 #                 gepflegt werden muss: `nix flake update ponytail`.
@@ -24,6 +24,14 @@
 }:
 
 {
+  # Claude Code registriert zur Laufzeit seinen URL-Handler in mimeapps.list und
+  # ersetzt damit den HM-Symlink → Eintrag deklarativ und HM darf überschreiben.
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications."x-scheme-handler/claude-cli" = [ "claude-code-url-handler.desktop" ];
+  };
+  xdg.configFile."mimeapps.list".force = true;
+
   programs.claude-code = {
     enable = true;
     package = pkgs.claude-code;
@@ -38,12 +46,14 @@
     };
 
     # --- Plugins ------------------------------------------------------------
-    # Attrset-Form statt Liste: nur so bleibt der Verzeichnisname stabil
-    # (Listenform leitet ihn aus dem Store-Pfad ab -> "…-source").
-    plugins.ponytail = inputs.ponytail;
+    # Als lokaler Marketplace statt `plugins.*`: nur echt installierte Plugins
+    # laden Hooks und Band-Module, als Personal Plugin laufen nur die Skills.
+    # Version bleibt über den Flake-Input in flake.lock gepinnt.
+    marketplaces.ponytail = inputs.ponytail;
 
     settings = {
       theme = "dark";
+      enabledPlugins."ponytail@ponytail" = true;
       includeCoAuthoredBy = false;
 
       permissions = {
@@ -77,6 +87,11 @@
           "mcp__plugin_hm_nixos__nix_versions"
         ];
       };
+
+      # Die Sandbox blockt unter Linux Unix-Sockets per seccomp (pfadgenaues
+      # allowUnixSockets geht nur auf macOS). nix braucht den Daemon-Socket,
+      # läuft deshalb außerhalb der Sandbox – Permission-Regeln gelten weiter.
+      sandbox.excludedCommands = [ "nix" ];
 
       # Nach jedem Schreibvorgang formatieren – aber nur .nix-Dateien, sonst
       # läuft nixfmt auf Markdown und schlägt fehl. Hook-Input kommt als JSON

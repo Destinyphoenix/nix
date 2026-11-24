@@ -40,6 +40,9 @@ in
       # Entspricht deinen Hyprland-Binds  bindm mouse:272 / mouse:273.
       floating.modifier = "Mod4";
 
+      # HM setzt sonst "no" -> Alt+Tab bliebe am letzten Tab stehen.
+      focus.wrapping = "yes";
+
       window = {
         border = 2;
         titlebar = false;
@@ -99,6 +102,11 @@ in
         "Mod4+Right" = "focus right";
         "Mod4+Up" = "focus up";
         "Mod4+Down" = "focus down";
+
+        # --- Tabs: Super+Tab schaltet Tabs an/aus, Alt+Tab blättert ---
+        "Mod4+Tab" = "layout toggle tabbed split";
+        "Mod1+Tab" = "focus next";
+        "Mod1+Shift+Tab" = "focus prev";
 
         # --- Workspace wechseln (swaysome: pro Output namespaced) ---
         "Mod4+1" = "exec swaysome focus 1";

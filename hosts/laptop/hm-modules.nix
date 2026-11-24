@@ -45,7 +45,7 @@
         inetutils # telnet-Client (nur Client, kein telnetd)
         ncdu
         libreoffice
-        vscode-fhs
+        #vscode-fhs
         super-productivity
       ];
     }
